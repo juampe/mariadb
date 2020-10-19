@@ -1,2 +1,2 @@
 # mariadb
-multiarch build trigger action
+multiarch build to have arm 32 docker image
