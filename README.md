@@ -1,2 +1,2 @@
 # mariadb
-multiarch build
+multiarch build trigger action
