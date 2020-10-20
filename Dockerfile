@@ -70,19 +70,19 @@ RUN set -ex; \
 	rm -r "$GNUPGHOME"; \
 	apt-key list
 
-# bashbrew-architectures: amd64 arm64v8 ppc64le
-ENV MARIADB_MAJOR 10.5
-ENV MARIADB_VERSION 1:10.5.6+maria~focal
+# focal architectures
+ENV MARIADB_MAJOR 10.3
+#ENV MARIADB_VERSION 1:10.5.6+maria~focal
 # release-status:Stable
 # (https://downloads.mariadb.org/mariadb/+releases/)
 
-RUN set -e;\
-	echo "deb http://ftp.osuosl.org/pub/mariadb/repo/$MARIADB_MAJOR/ubuntu focal main" > /etc/apt/sources.list.d/mariadb.list; \
-	{ \
-		echo 'Package: *'; \
-		echo 'Pin: release o=MariaDB'; \
-		echo 'Pin-Priority: 999'; \
-	} > /etc/apt/preferences.d/mariadb
+#RUN set -e;\
+#	echo "deb http://ftp.osuosl.org/pub/mariadb/repo/$MARIADB_MAJOR/ubuntu focal main" > /etc/apt/sources.list.d/mariadb.list; \
+#	{ \
+#		echo 'Package: *'; \
+#		echo 'Pin: release o=MariaDB'; \
+#		echo 'Pin-Priority: 999'; \
+#	} > /etc/apt/preferences.d/mariadb
 # add repository pinning to make sure dependencies from this MariaDB repo are preferred over Debian dependencies
 #  libmariadbclient18 : Depends: libmysqlclient18 (= 5.5.42+maria-1~wheezy) but 5.5.43-0+deb7u1 is to be installed
 
@@ -95,7 +95,7 @@ RUN set -ex; \
 	} | debconf-set-selections; \
 	apt-get update; \
 	apt-get install -y \
-		"mariadb-server=$MARIADB_VERSION" \
+		"mariadb-server" \
 # mariadb-backup is installed at the same time so that `mysql-common` is only installed once from just mariadb repos
 		mariadb-backup \
 		socat \
