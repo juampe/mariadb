@@ -1,2 +1,2 @@
 #!/usr/bin/with-contenv sh
-/etc/init.d/mariadb-server start
+/etc/init.d/mariadb start
