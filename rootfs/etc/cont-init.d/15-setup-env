@@ -1,0 +1,14 @@
+#!/usr/bin/with-contenv bash
+set -e
+
+if [ -n MYSQL_ROOT_PASSWORD ]
+then
+	PASSWD="'$MYSQL_ROOT_PASSWORD'"
+	/usr/bin/mariadbd-safe  –skip-grant-tables skip-networking &
+mysql -u root -e  << EOF
+FLUSH PRIVILEGES;
+SET PASSWORD FOR root@'localhost' = PASSWORD($PASSWD);
+UPDATE mysql.user SET Password=PASSWORD($PASSWD) WHERE User='root';"
+FLUSH PRIVILEGES;
+EOF
+fi
