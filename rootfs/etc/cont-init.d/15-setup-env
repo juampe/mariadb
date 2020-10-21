@@ -4,11 +4,17 @@ set -e
 if [ -n MYSQL_ROOT_PASSWORD ]
 then
 	PASSWD="'$MYSQL_ROOT_PASSWORD'"
-	/usr/bin/mariadbd-safe  –skip-grant-tables skip-networking &
-mysql -u root -e  << EOF
+	pkill -9 mysqld_safe;pkill -9 mysqld_safe;pkill -9 mariadbd
+	/usr/bin/mariadbd-safe --skip-grant-tables --skip-networking &
+cat > mysql << EOF
+USE mysql;
 FLUSH PRIVILEGES;
 SET PASSWORD FOR root@'localhost' = PASSWORD($PASSWD);
-UPDATE mysql.user SET Password=PASSWORD($PASSWD) WHERE User='root';"
+UPDATE mysql.user SET password=PASSWORD($PASSWD) WHERE user='root';"
 FLUSH PRIVILEGES;
 EOF
+#UPDATE user SET plugin='unix_socket' WHERE user='root' and host='localhost';
+	/usr/bin/pkill -9 mariadbd-safe
+	/usr/bin/pkill -9 mariadbd
+
 fi
