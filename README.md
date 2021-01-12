@@ -1,6 +1,6 @@
 # mariadb
 
-multiarch build to have arm 32 docker image
+Multiarch build to have arm32 flavour docker image 
 
 [github repo](https://github.com/juampe/mariadb)
 
